@@ -1,4 +1,4 @@
-Hyper-V DoS PoC
+Hyper-V DoS PoC.
 This is code files of Visual Studio 2019 driver project. 
 1. Compile driver.
 2. Enable nested virtualization for guest OS using command:
