@@ -5,8 +5,9 @@
 // https://github.com/SinaKarvandi/Hypervisor-From-Scratch/tree/master/Part%208%20-%20How%20To%20Do%20Magic%20With%20Hypervisor!/Hypervisor%20From%20Scratch/MyHypervisorDriver
 //
 
+
 PVOID AllocatePageAlignedMemory(ULONG64 size)
-{	
+{
 	PHYSICAL_ADDRESS PhysicalMax = { 0 };
 	PVOID pBuffer = NULL;
 	UINT64 AlignedBuffer;
@@ -120,10 +121,13 @@ BOOLEAN HvActivateVpPages()
 	// Configure enlightened VMCS. If we write to HV_X64_MSR_APIC_ASSIST_PAGE after configuring, we get BSOD
 	//
 
+	//DbgBreakPoint();
+
 	pHvVpPage->EnlightenVmEntry = TRUE;
 	pHvVpPage->CurrentNestedVmcs = physHvEnlVMCS;
 
-	__writemsr(HV_X64_MSR_APIC_ASSIST_PAGE, guestPFN.AsUINT64);
+	//FillBuffer((PCHAR)pHvVpPage, PAGE_SIZE, 0x11);
+	//__writemsr(HV_X64_MSR_APIC_ASSIST_PAGE, guestPFN.AsUINT64);
 
 	//If next 2 string will be uncomment, BSOD will not be generated.
 
@@ -143,7 +147,7 @@ BOOLEAN HvActivateVpPages()
 		return FALSE;
 	}
 
-	__vmx_vmlaunch(); // BSOD
+	__vmx_vmlaunch();
 
 	__vmx_off();
 
